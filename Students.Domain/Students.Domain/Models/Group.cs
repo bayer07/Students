@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Students.Domain.Interfaces;
 
 namespace Students.Domain.Models
 {
-    public class Group<TKey>
+    public class Group<TKey> : IModel<TKey>
     {
         [Key]
         public TKey Id { get; set; }

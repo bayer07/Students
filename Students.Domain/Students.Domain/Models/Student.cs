@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Students.Domain.Enums;
+using Students.Domain.Interfaces;
 
 namespace Students.Domain.Models
 {
-    public class Student<TKey>
+    public class Student<TKey> : IModel<TKey>
     {
         [Key]
         public TKey Id { get; set; }
