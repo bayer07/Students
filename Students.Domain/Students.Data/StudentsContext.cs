@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Students.Domain.Models;
 
 namespace Students.Data
@@ -14,6 +15,7 @@ namespace Students.Data
         {
             builder.Entity<Student>().HasData(
                 new Student { Id = 0, FirstName = "Bair", LastName = "Dongak" });
+            builder.
 
             builder.Entity<Group>().ToTable("Groups");
             builder.Entity<Student>().ToTable("Students")
@@ -28,5 +30,13 @@ namespace Students.Data
 
         public DbSet<Student> Students { get; set; }
         public DbSet<Group> Groups { get; set; }
+    }
+
+    public class StudentConfiguration : IEntityTypeConfiguration<Student>
+    {
+        public void Configure(EntityTypeBuilder<Student> builder)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
