@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Students.Domain.Enums;
-using Students.Domain.Interfaces;
 
 namespace Students.Domain.Models
 {
-    public class Student<TKey> : IModel<TKey>
+    public class Student : Model<int>
     {
         [Key]
-        public TKey Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public Gender Gender { get; set; }
@@ -26,6 +25,5 @@ namespace Students.Domain.Models
         [MinLength(6)]
         [MaxLength(16)]
         public string UniqIdentity { get; set; }
-
     }
 }

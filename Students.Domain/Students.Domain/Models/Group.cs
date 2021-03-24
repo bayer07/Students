@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Students.Domain.Interfaces;
 
 namespace Students.Domain.Models
 {
-    public class Group<TKey> : IModel<TKey>
+    public class Group : Model<int>
     {
         [Key]
-        public TKey Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(25)]

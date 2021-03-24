@@ -1,12 +1,12 @@
-﻿using Students.Domain.Interfaces;
+﻿using Students.Domain.Models;
 
 namespace Students.Data.Interfaces
 {
-    public interface IRepository<TKey>
+    public interface IRepository<T>
     {
-        TKey Create(IModel<TKey> model);
-        void Update(IModel<TKey> model);
-        void Delete(TKey id);
-        IModel<TKey> GetById(TKey id);
+        int Create(Model<T> model);
+        void Update(Model<T> model);
+        void Delete(T id);
+        Model<T> GetById(T id);
     }
 }

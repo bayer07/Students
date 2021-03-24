@@ -1,16 +1,16 @@
 ﻿using Students.Data.Interfaces;
-using Students.Domain.Interfaces;
+using Students.Domain.Models;
 
 namespace Students.Data.Repositories
 {
     public class StudentRepository : IRepository<int>
     {
-        public int Create(IModel<int> model)
+        public int Create(Model<int> model)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(IModel<int> model)
+        public void Update(Model<int> model)
         {
             throw new System.NotImplementedException();
         }
@@ -20,7 +20,7 @@ namespace Students.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IModel<int> GetById(int id)
+        public Model<int> GetById(int id)
         {
             throw new System.NotImplementedException();
         }
