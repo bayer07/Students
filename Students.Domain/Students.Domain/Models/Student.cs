@@ -4,11 +4,8 @@ using Students.Domain.Enums;
 
 namespace Students.Domain.Models
 {
-    public class Student : Model<int>
+    public class Student : StudentModel
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public Gender Gender { get; set; }
 

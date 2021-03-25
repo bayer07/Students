@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Students.Domain.Enums;
 using Students.Domain.Models;
 
 namespace Students.Data
@@ -12,9 +14,28 @@ namespace Students.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.ApplyConfiguration(new StudentConfiguration());
             builder.ApplyConfiguration(new GroupConfiguration());
             builder.ApplyConfiguration(new GroupStudentConfiguration());
+
+            builder.Entity<Student>().HasData(new Student
+            {
+                Id = 1,
+                FirstName = "Bair",
+                LastName = "Dongak",
+                Gender = Gender.Male,
+                UniqIdentity = "bayer07",
+                Patronymic = "Orlanovich"
+            });
+
+            builder.Entity<Group>().HasData(new Group
+            {
+                Id = 1,
+                Name = "Developers"
+            });
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

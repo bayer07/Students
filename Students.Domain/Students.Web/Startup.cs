@@ -30,7 +30,7 @@ namespace Students.Web
             services.AddControllersWithViews();
 
             services.AddDbContext<StudentsContext>();
-            services.AddScoped<IRepository<Student>, StudentRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IRepository<Group>, GroupRepository>();
             services.AddScoped<IRepository<GroupStudent>, GroupStudentRepository>();
         }
@@ -52,7 +52,6 @@ namespace Students.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

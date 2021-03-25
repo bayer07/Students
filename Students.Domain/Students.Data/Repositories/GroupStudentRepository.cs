@@ -10,6 +10,11 @@ namespace Students.Data.Repositories
             DbSet = ctx.GroupStudents;
         }
 
+        public override void Include()
+        {
+            ctx.GroupStudents.Include(x => x.Group).Include(x => x.Student);
+        }
+
         protected override DbSet<GroupStudent> DbSet { get; }
     }
 }

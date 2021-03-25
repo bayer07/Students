@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Students.Data.Interfaces;
@@ -6,7 +7,7 @@ using Students.Domain.Models;
 
 namespace Students.Data.Repositories
 {
-    public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel : Model<int>
+    public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel : StudentModel
     {
         protected readonly StudentsContext ctx;
         protected abstract DbSet<TModel> DbSet { get; }
@@ -33,8 +34,18 @@ namespace Students.Data.Repositories
             ctx.SaveChanges();
         }
 
-        Task<TModel> IRepository<TModel>.GetById(int id) => DbSet.SingleOrDefaultAsync(x => x.Id == id);
+        public Task<TModel> GetById(int id)
+        {
+            Include();
+            return DbSet.SingleOrDefaultAsync(x => x.Id == id);
+        }
 
-        public Task<List<TModel>> GetAll() => DbSet.ToListAsync();
+        public Task<List<TModel>> GetAll()
+        {
+            Include();
+            return DbSet.ToListAsync();
+        }
+
+        public virtual void Include() { }
     }
 }
