@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Students.Data;
+using Students.Data.Interfaces;
 using Students.Domain.Models;
 
 namespace Students.Web.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly StudentsContext _context;
+        private readonly IRepository<Student> repository;
 
-        public StudentsController(StudentsContext context)
+        public StudentsController(IRepository<Student> repository)
         {
-            _context = context;
+            this.repository = repository;
         }
 
-        // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            return View(await repository.GetAll());
         }
 
-        // GET: Students/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,8 +27,7 @@ namespace Students.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await repository.GetById((int)id);
             if (student == null)
             {
                 return NotFound();
@@ -43,29 +36,23 @@ namespace Students.Web.Controllers
             return View(student);
         }
 
-        // GET: Students/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Students/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Gender,LastName,FirstName,Patronymic,UniqIdentity")] Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
+                repository.Create(student);
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
         }
 
-        // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,7 +60,7 @@ namespace Students.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
+            var student = await repository.GetById((int)id);
             if (student == null)
             {
                 return NotFound();
@@ -81,9 +68,6 @@ namespace Students.Web.Controllers
             return View(student);
         }
 
-        // POST: Students/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Gender,LastName,FirstName,Patronymic,UniqIdentity")] Student student)
@@ -97,8 +81,7 @@ namespace Students.Web.Controllers
             {
                 try
                 {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    repository.Update(student);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,8 +107,7 @@ namespace Students.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var student = await repository.GetById((int)id);
             if (student == null)
             {
                 return NotFound();
@@ -134,20 +116,18 @@ namespace Students.Web.Controllers
             return View(student);
         }
 
-        // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
+            var student = await repository.GetById(id);
+            repository.Delete(student);
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return _context.Students.Any(e => e.Id == id);
+            return repository.GetById(id) != null;
         }
     }
 }

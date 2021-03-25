@@ -1,28 +1,15 @@
-﻿using Students.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
 using Students.Domain.Models;
 
 namespace Students.Data.Repositories
 {
-    public class GroupRepository : IRepository<int>
+    public class GroupRepository : BaseRepository<Group>
     {
-        public int Create(Model<int> model)
+        public GroupRepository(StudentsContext ctx) : base(ctx)
         {
-            throw new System.NotImplementedException();
+            DbSet = ctx.Groups;
         }
 
-        public void Update(Model<int> model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Model<int> GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+        protected override DbSet<Group> DbSet { get; }
     }
 }

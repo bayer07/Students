@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Students.Data;
+using Students.Data.Interfaces;
+using Students.Data.Repositories;
+using Students.Domain.Models;
 
 namespace Students.Web
 {
@@ -27,6 +30,9 @@ namespace Students.Web
             services.AddControllersWithViews();
 
             services.AddDbContext<StudentsContext>();
+            services.AddScoped<IRepository<Student>, StudentRepository>();
+            services.AddScoped<IRepository<Group>, GroupRepository>();
+            services.AddScoped<IRepository<GroupStudent>, GroupStudentRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

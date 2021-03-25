@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Students.Domain.Enums;
 
 namespace Students.Domain.Models
@@ -25,5 +26,7 @@ namespace Students.Domain.Models
         [MinLength(6)]
         [MaxLength(16)]
         public string UniqIdentity { get; set; }
+
+        public virtual ICollection<GroupStudent> GroupStudents { get; set; }
     }
 }

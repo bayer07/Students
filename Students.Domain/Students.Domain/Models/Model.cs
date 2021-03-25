@@ -1,7 +1,7 @@
 ﻿namespace Students.Domain.Models
 {
-    public abstract class Model<T>
+    public abstract class Model<TKey>
     {
-        T Id { get; set; }
+        public TKey Id { get; set; }
     }
 }

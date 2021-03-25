@@ -1,28 +1,15 @@
-﻿using Students.Data.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
 using Students.Domain.Models;
 
 namespace Students.Data.Repositories
 {
-    public class StudentRepository : IRepository<int>
+    public class StudentRepository : BaseRepository<Student>
     {
-        public int Create(Model<int> model)
+        public StudentRepository(StudentsContext ctx) : base(ctx)
         {
-            throw new System.NotImplementedException();
+            DbSet = ctx.Students;
         }
 
-        public void Update(Model<int> model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Model<int> GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
+        protected override DbSet<Student> DbSet { get; }
     }
 }
