@@ -30,12 +30,58 @@ namespace Students.Data
                 Patronymic = "Orlanovich"
             });
 
+            builder.Entity<Student>().HasData(new Student
+            {
+                Id = 2,
+                FirstName = "Roman",
+                LastName = "X",
+                Gender = Gender.Male,
+            });
+
+            builder.Entity<Student>().HasData(new Student
+            {
+                Id = 3,
+                FirstName = "Some",
+                LastName = "Girl",
+                Gender = Gender.Female,
+            });
+
+            builder.Entity<Student>().HasData(new Student
+            {
+                Id = 4,
+                FirstName = "Student",
+                LastName = "4",
+                Gender = Gender.Female,
+            });
+
             builder.Entity<Group>().HasData(new Group
             {
                 Id = 1,
                 Name = "Developers"
             });
+            builder.Entity<Group>().HasData(new Group
+            {
+                Id = 2,
+                Name = "QA"
+            });
+            builder.Entity<Group>().HasData(new Group
+            {
+                Id = 3,
+                Name = "RnD"
+            });
 
+            builder.Entity<GroupStudent>().HasData(new GroupStudent
+            {
+                Id = 1,
+                GroupId = 1,
+                StudentId = 1
+            });
+            builder.Entity<GroupStudent>().HasData(new GroupStudent
+            {
+                Id = 2,
+                GroupId = 2,
+                StudentId = 1
+            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -72,7 +118,7 @@ namespace Students.Data
     {
         public void Configure(EntityTypeBuilder<GroupStudent> builder)
         {
-            builder.HasKey(x => new { x.GroupId, x.StudentId });
+            builder.HasKey(x => new { x.Id, x.GroupId, x.StudentId });
 
             builder.HasOne(x => x.Student)
                 .WithMany(x => x.GroupStudents)

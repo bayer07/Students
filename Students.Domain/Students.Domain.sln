@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Data", "Students.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Students.Web", "Students.Web\Students.Web.csproj", "{713DCDFC-8024-4485-A12D-D84833A29961}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Students.React", "Students.React\Students.React.csproj", "{F5B19DA6-99BE-4C00-AC77-8C5A719D4E64}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{713DCDFC-8024-4485-A12D-D84833A29961}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{713DCDFC-8024-4485-A12D-D84833A29961}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{713DCDFC-8024-4485-A12D-D84833A29961}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F5B19DA6-99BE-4C00-AC77-8C5A719D4E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5B19DA6-99BE-4C00-AC77-8C5A719D4E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5B19DA6-99BE-4C00-AC77-8C5A719D4E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5B19DA6-99BE-4C00-AC77-8C5A719D4E64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

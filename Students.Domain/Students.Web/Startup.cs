@@ -28,7 +28,7 @@ namespace Students.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<StudentsContext>();
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IRepository<Group>, GroupRepository>();

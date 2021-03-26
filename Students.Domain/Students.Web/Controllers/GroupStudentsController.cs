@@ -14,7 +14,7 @@ namespace Students.Web.Controllers
         private readonly IRepository<GroupStudent> repository;
         private readonly IRepository<Group> groupRepository;
         private readonly IRepository<Student> studentRepository;
-        public GroupStudentsController(IRepository<GroupStudent> repository, IRepository<Student> studentRepository, IRepository<Group> groupRepository)
+        public GroupStudentsController(IRepository<GroupStudent> repository, IStudentRepository studentRepository, IRepository<Group> groupRepository)
         {
             this.repository = repository;
             this.groupRepository = groupRepository;

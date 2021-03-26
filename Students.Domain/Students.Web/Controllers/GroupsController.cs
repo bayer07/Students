@@ -1,27 +1,39 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Students.Data.Interfaces;
 using Students.Domain.Models;
+using Students.Web.DTOs;
+using Students.Web.Models;
 
 namespace Students.Web.Controllers
 {
     public class GroupsController : Controller
     {
         private readonly IRepository<Group> repository;
-
-        public GroupsController(IRepository<Group> repository)
+        private readonly IMapper mapper;
+        public GroupsController(IRepository<Group> repository, IMapper mapper)
         {
             this.repository = repository;
+            this.mapper = mapper;
         }
 
-        // GET: Groups
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name)
         {
-            return View(await repository.GetAll());
+            var groups = repository.AsQueryable();
+            if (!string.IsNullOrEmpty(name))
+            {
+                var nameInLower = name.ToLower();
+                groups = groups.Where(x => x.Name.ToLower().Contains(nameInLower));
+            }
+
+            var groupDtos = mapper.Map<IEnumerable<GroupDto>>(groups);
+            return View(new GroupsViewModel { Groups = groupDtos, Name = name });
         }
 
-        // GET: Groups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,15 +50,11 @@ namespace Students.Web.Controllers
             return View(group);
         }
 
-        // GET: Groups/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Groups/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Id")] Group group)
@@ -59,7 +67,6 @@ namespace Students.Web.Controllers
             return View(@group);
         }
 
-        // GET: Groups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,7 +113,6 @@ namespace Students.Web.Controllers
             return View(@group);
         }
 
-        // GET: Groups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,7 +129,6 @@ namespace Students.Web.Controllers
             return View(group);
         }
 
-        // POST: Groups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Students.Data.Interfaces;
@@ -34,18 +35,15 @@ namespace Students.Data.Repositories
             ctx.SaveChanges();
         }
 
-        public Task<TModel> GetById(int id)
-        {
-            Include();
-            return DbSet.SingleOrDefaultAsync(x => x.Id == id);
-        }
+        // Override if need include something
+        public virtual Task<TModel> GetById(int id) => DbSet.SingleOrDefaultAsync(x => x.Id == id);
 
-        public Task<List<TModel>> GetAll()
-        {
-            Include();
-            return DbSet.ToListAsync();
-        }
+        // Override if need include something
+        public virtual Task<List<TModel>> GetAll() => DbSet.ToListAsync();
 
-        public virtual void Include() { }
+        public virtual IQueryable<TModel> AsQueryable()
+        {
+            return DbSet.AsQueryable();
+        }
     }
 }

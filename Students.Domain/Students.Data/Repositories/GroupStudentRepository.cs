@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Students.Domain.Models;
 
 namespace Students.Data.Repositories
@@ -10,11 +12,12 @@ namespace Students.Data.Repositories
             DbSet = ctx.GroupStudents;
         }
 
-        public override void Include()
-        {
-            ctx.GroupStudents.Include(x => x.Group).Include(x => x.Student);
-        }
-
         protected override DbSet<GroupStudent> DbSet { get; }
+
+        public override Task<List<GroupStudent>> GetAll() => 
+            ctx.GroupStudents.Include(x => x.Student).Include(x => x.Group).ToListAsync();
+
+        public override Task<GroupStudent> GetById(int id) =>
+            ctx.GroupStudents.Include(x => x.Student).Include(x => x.Group).SingleOrDefaultAsync(x => x.Id == id);
     }
 }
